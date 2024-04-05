@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './db/index.js';
+import userRoutes from './routes/user.routes.js'
 dotenv.config()
 
 
@@ -19,6 +20,10 @@ app.use(express.json());
 //config db
 
 connectDB();
+
+
+//define routes
+app.use('/api/v1/users', userRoutes);
 
 //health route
 app.get("/", (req,res)=>{
