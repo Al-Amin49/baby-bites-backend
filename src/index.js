@@ -1,9 +1,24 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import connectDB from './db/index.js';
 dotenv.config()
 
 
 const app=express();
+
+//middlewares
+app.use(
+    cors({
+        origin:process.env.CORS_ORIGIN,
+        credentials:true
+    })
+);
+app.use(express.json());
+
+//config db
+
+connectDB();
 
 //health route
 app.get("/", (req,res)=>{
