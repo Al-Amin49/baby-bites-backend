@@ -12,6 +12,7 @@ const reviewSchema = new Schema(
   { timestamps: true }
 );
 
+
 const productSchema = new Schema(
   {
     title: {
@@ -53,12 +54,7 @@ const productSchema = new Schema(
       type: Date,
     },
     reviews: [reviewSchema],
-    seoTitle: {
-      type: String,
-    },
-    seoDescription: {
-      type: String,
-    },
+  
   },
 
   { timestamps: true }

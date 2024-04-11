@@ -1,5 +1,5 @@
 import express from 'express';
-import { userControllers } from '../controllers/user.controller.js';
+import { userControllers } from '../controllers/user.controllers.js';
 import { protect } from '../middlewares/auth.middleware.js';
 
 const router=express.Router();
