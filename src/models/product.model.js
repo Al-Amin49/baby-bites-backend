@@ -60,4 +60,13 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
+//discount field based on  price and SalePrice
+productSchema.virtual('discount').get(function(){
+  if(this.flashSale && this.salePrice){
+    return ((this.price-this.salePrice)/this.price)*100;
+  }
+  else{
+    return 0;
+  }
+})
 export const Product = mongoose.model("Product", productSchema);

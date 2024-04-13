@@ -46,10 +46,11 @@ const addProduct = asyncHandler(async (req, res) => {
     salePrice,
     saleEndDate,
   });
-
+ // Convert product to JSON including virtual properties
+ const productJSON = product.toJSON({ virtuals: true });
   return res
     .status(201)
-    .json(new ApiResponse(201, product, "Product added successfully"));
+    .json(new ApiResponse(201, productJSON, "Product added successfully"));
 });
 
 /*-------------------
