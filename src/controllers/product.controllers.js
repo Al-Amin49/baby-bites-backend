@@ -65,7 +65,73 @@ const getAllProducts = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, products, "Products fetched successfully"));
 });
 
+/*-------------------
+@desc    GET single product
+@route    GET api/v1/products/:id
+@access  public
+*/
+const getSingleProduct = asyncHandler(async (req, res) => {
+
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, product, "Product fetched successfully"));
+});
+
+/*-------------------
+@desc     update single product
+@route    PUT api/v1/products/:id
+@access   private
+*/
+const updateSingleProduct = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { title,description, price,category, brand, stockQuantity,flashSale,salePrice,saleEndDate} = req.body;
+
+  // Check if the product with the specified ID exists
+  const existingProduct = await Product.findById(id);
+  if (!existingProduct) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  // Update the product
+  const updatedProduct = await Product.findByIdAndUpdate(
+    id,
+    { title,description, price,category, brand, stockQuantity,flashSale,salePrice,saleEndDate} ,
+    { new: true }
+  );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, updatedProduct, "Product updated successfully"));
+});
+
+/*-------------------
+@desc     delete single product
+@route    DELETE api/v1/products/:id
+@access   private
+*/
+const deleteSingleProduct = asyncHandler(async (req, res) => {
+  const productId = req.params.id;
+
+  const deletedProduct = await Product.findByIdAndDelete(productId);
+
+  if (!deletedProduct) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Product deleted successfully"));
+});
 export const productControllers = {
   addProduct,
   getAllProducts,
+  getSingleProduct,
+  updateSingleProduct,
+  deleteSingleProduct
 };

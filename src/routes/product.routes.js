@@ -17,4 +17,11 @@ router
   )
   .get(productControllers.getAllProducts);
 
+//update, delete, getSingle product
+router
+  .route("/:id")
+  .put(productControllers.updateSingleProduct)
+  .get(productControllers.getSingleProduct)
+  .delete(productControllers.deleteSingleProduct);
+
 export default router;
