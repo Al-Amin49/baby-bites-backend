@@ -59,10 +59,16 @@ const addProduct = asyncHandler(async (req, res) => {
 @access  public
 */
 const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const products = await Product.find({})
+  const productsWithDiscount = products.map(product => {
+    return {
+      ...product.toJSON(),
+      discount: product.discount // This should populate the discount correctly
+    };
+  });
   return res
     .status(200)
-    .json(new ApiResponse(200, products, "Products fetched successfully"));
+    .json(new ApiResponse(200, productsWithDiscount, "Products fetched successfully"));
 });
 
 /*-------------------
