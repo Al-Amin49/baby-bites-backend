@@ -59,7 +59,29 @@ const addProduct = asyncHandler(async (req, res) => {
 @access  public
 */
 const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({})
+
+let filters={};
+
+// Filter by rating
+const { rating } = req.query;
+if (rating) {
+  filters['reviews.rating'] = parseInt(rating);
+}
+
+//filter by category
+if (req.query.category) {
+  filters.category = req.query.category;
+}
+// Filter by price range
+const { minPrice, maxPrice } = req.query;
+if (minPrice && maxPrice) {
+  filters.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+} else if (minPrice) {
+  filters.price = { $gte: parseInt(minPrice) };
+} else if (maxPrice) {
+  filters.price = { $lte: parseInt(maxPrice) };
+}
+  const products = await Product.find(filters)
   const productsWithDiscount = products.map(product => {
     return {
       ...product.toJSON(),

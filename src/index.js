@@ -4,9 +4,7 @@ import cors from 'cors';
 import connectDB from './db/index.js';
 import userRoutes from './routes/user.routes.js'
 import productRoutes from './routes/product.routes.js';
-dotenv.config({
-    path: './env'
-});
+dotenv.config();
 
 
 const app=express();
