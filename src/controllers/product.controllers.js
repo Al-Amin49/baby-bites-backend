@@ -101,6 +101,7 @@ if (minPrice && maxPrice) {
 const getSingleProduct = asyncHandler(async (req, res) => {
 
   const product = await Product.findById(req.params.id);
+  console.log('product', product)
 
   if (!product) {
     throw new ApiError(404, "Product not found");
